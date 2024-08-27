@@ -6,6 +6,7 @@ import cors from 'cors';
 import dbConnection from './config/database.js';
 import configCloudinary from './config/cloudinary.js';
 import cloudinary from "cloudinary";
+import { errorMiddleware } from './middlewares/error.js';
 
 const app = express();
 
@@ -27,6 +28,8 @@ app.use(
         tempFileDir: "/tmp/",
     })
 );
+
+app.use(errorMiddleware);
 
 dbConnection();
 
