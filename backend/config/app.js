@@ -6,6 +6,9 @@ const configApp = {
     appPort: process.env.PORT,
     portfolioURL: process.env.PORTFOLIO_URL,
     dashboardURL: process.env.DASHBOARD_URL,
+    jwtSecretKey: process.env.JWT_SECRET_KEY,
+    jwtExpiryTime: process.env.JWT_EXPIRES,
+    cookieExpiryTime: process.env.COOKIE_EXPIRES,
 }
 
 export default configApp;
