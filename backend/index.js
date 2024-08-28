@@ -7,6 +7,7 @@ import dbConnection from './config/database.js';
 import configCloudinary from './config/cloudinary.js';
 import cloudinary from "cloudinary";
 import { errorMiddleware } from './middlewares/error.js';
+import messageRouter from './routes/messageRouter.js';
 
 const app = express();
 
@@ -28,6 +29,8 @@ app.use(
         tempFileDir: "/tmp/",
     })
 );
+
+app.use('/message', messageRouter);
 
 app.use(errorMiddleware);
 
