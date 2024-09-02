@@ -8,7 +8,7 @@ import configCloudinary from './config/cloudinary.js';
 import cloudinary from "cloudinary";
 import { errorMiddleware } from './middlewares/error.js';
 import messageRouter from './routes/messageRouter.js';
-
+import userRouter from "./routes/userRouter.js";
 const app = express();
 
 const PORT = configApp.appPort;
@@ -31,6 +31,7 @@ app.use(
 );
 
 app.use('/message', messageRouter);
+app.use("/user", userRouter);
 
 app.use(errorMiddleware);
 

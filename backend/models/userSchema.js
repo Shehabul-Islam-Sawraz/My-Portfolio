@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import configApp from "../config/app";
+import configApp from "../config/app.js";
 
 const userSchema = new mongoose.Schema({
     fullName: {
