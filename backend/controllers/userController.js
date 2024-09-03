@@ -3,6 +3,7 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import { User } from "../models/userSchema.js";
 import ErrorHandler from "../middlewares/error.js";
 import { generateToken } from "../utils/jwtToken.js";
+import path from 'path';
 
 export const register = catchAsyncErrors(async (req, res, next) => {
     if (!req.files || Object.keys(req.files).length === 0) {
@@ -10,9 +11,10 @@ export const register = catchAsyncErrors(async (req, res, next) => {
     }
     const { avatar, resume } = req.files;
 
+    // Handle Avatar
     const responseAvatar = await cloudinary.uploader.upload(
         avatar.tempFilePath,
-        { folder: "PORTFOLIO AVATAR" }
+        { folder: "PORTFOLIO_AVATAR" }
     );
     if (!responseAvatar || responseAvatar.error) {
         console.error(
@@ -22,9 +24,23 @@ export const register = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("Failed to upload avatar to Cloudinary", 500));
     }
 
+    // Handle Resume
+    // console.log(resume)
+    const extension = path.extname(resume.name).toLowerCase();
+    let resourceType = 'auto';
+
+    if (['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp'].includes(extension)) {
+        resourceType = 'image';
+    } else if (['.pdf'].includes(extension)) {
+        resourceType = 'raw';
+    }
+    // console.log(resourceType)
     const responseResume = await cloudinary.uploader.upload(
         resume.tempFilePath,
-        { folder: "PORTFOLIO RESUME" }
+        {
+            folder: "PORTFOLIO_RESUME",
+            resource_type: resourceType
+        }
     );
     if (!responseResume || responseResume.error) {
         console.error(
