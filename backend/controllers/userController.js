@@ -90,3 +90,19 @@ export const register = catchAsyncErrors(async (req, res, next) => {
     // });
     generateToken(user, "User Registered Successfully!!", 201, res);
 });
+
+export const login = catchAsyncErrors(async (req, res, next) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return next(new ErrorHandler("Email or Password is Missing!", 400));
+    }
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) {
+        return next(new ErrorHandler("Incorrect Email Or Password!", 404));
+    }
+    const isPasswordMatched = await user.comparePassword(password);
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler("Incorrect Email Or Password!", 401));
+    }
+    generateToken(user, "Logged In Successfully!", 200, res);
+});
