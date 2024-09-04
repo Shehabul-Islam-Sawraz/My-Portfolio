@@ -9,6 +9,7 @@ const configApp = {
     jwtSecretKey: process.env.JWT_SECRET_KEY,
     jwtExpiryTime: process.env.JWT_EXPIRES,
     cookieExpiryTime: process.env.COOKIE_EXPIRES,
+    myPortfolioId: process.env.MY_ID,
 }
 
 export default configApp;

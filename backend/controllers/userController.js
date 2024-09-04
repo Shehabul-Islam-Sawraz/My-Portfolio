@@ -4,6 +4,7 @@ import { User } from "../models/userSchema.js";
 import ErrorHandler from "../middlewares/error.js";
 import { generateToken } from "../utils/jwtToken.js";
 import path from 'path';
+import configApp from "../config/app.js";
 
 export const register = catchAsyncErrors(async (req, res, next) => {
     if (!req.files || Object.keys(req.files).length === 0) {
@@ -213,6 +214,38 @@ export const updateProfile = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: "Profile Updated Successfully!",
+        user,
+    });
+});
+
+export const updatePassword = catchAsyncErrors(async (req, res, next) => {
+    const { currentPassword, newPassword, confirmNewPassword } = req.body;
+    const user = await User.findById(req.user.id).select("+password");
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+        return next(new ErrorHandler("Please fill up all the fields!", 400));
+    }
+    const isPasswordMatched = await user.comparePassword(currentPassword);
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler("Incorrect Current Password!"));
+    }
+    if (newPassword !== confirmNewPassword) {
+        return next(
+            new ErrorHandler("New Password and Confirm Password don\'t Match!")
+        );
+    }
+    user.password = newPassword;
+    await user.save();
+    res.status(200).json({
+        success: true,
+        message: "Password Updated Successfully!",
+    });
+});
+
+export const getUserForPortfolio = catchAsyncErrors(async (req, res, next) => {
+    const id = configApp.myPortfolioId;
+    const user = await User.findById(id);
+    res.status(200).json({
+        success: true,
         user,
     });
 });
