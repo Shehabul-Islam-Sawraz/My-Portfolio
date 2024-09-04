@@ -5,6 +5,7 @@ import ErrorHandler from "../middlewares/error.js";
 import { generateToken } from "../utils/jwtToken.js";
 import path from 'path';
 import configApp from "../config/app.js";
+import { sendEmail } from "../utils/email.js";
 
 export const register = catchAsyncErrors(async (req, res, next) => {
     if (!req.files || Object.keys(req.files).length === 0) {
@@ -248,4 +249,36 @@ export const getUserForPortfolio = catchAsyncErrors(async (req, res, next) => {
         success: true,
         user,
     });
+});
+
+export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+        return next(new ErrorHandler("No user found with this email!", 404));
+    }
+    const resetToken = user.getResetPasswordToken();
+
+    // Saving user with reset token
+    await user.save({ validateBeforeSave: false });
+
+    const resetPasswordUrl = `${configApp.dashboardURL}/password/reset/${resetToken}`;
+
+    const message = `Your Reset Password Token is:- \n\n ${resetPasswordUrl}  \n\n If you haven't requested this email then, please ignore it.`;
+
+    try {
+        await sendEmail({
+            email: user.email,
+            subject: `Portfolio Dashboard Password Recovery`,
+            message,
+        });
+        res.status(201).json({
+            success: true,
+            message: `Email sent to ${user.email} successfully!`,
+        });
+    } catch (error) {
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save({ validateBeforeSave: false });
+        return next(new ErrorHandler(error.message, 500));
+    }
 });

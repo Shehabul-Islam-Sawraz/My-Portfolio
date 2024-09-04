@@ -1,5 +1,6 @@
 import express from "express";
 import {
+    forgotPassword,
     getUser,
     getUserForPortfolio,
     login,
@@ -19,5 +20,6 @@ router.get("/", isAuthenticated, getUser);
 router.put("/update/profile", isAuthenticated, updateProfile);
 router.put("/update/password", isAuthenticated, updatePassword);
 router.get("/portfolio", getUserForPortfolio);
+router.post("/password/forgot", forgotPassword);
 
 export default router;
