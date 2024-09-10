@@ -9,6 +9,7 @@ import cloudinary from "cloudinary";
 import { errorMiddleware } from './middlewares/error.js';
 import messageRouter from './routes/messageRouter.js';
 import userRouter from "./routes/userRouter.js";
+import timelineRouter from "./routes/timelineRouter.js";
 const app = express();
 
 const PORT = configApp.appPort;
@@ -32,7 +33,7 @@ app.use(
 
 app.use('/message', messageRouter);
 app.use("/user", userRouter);
-
+app.use("/timeline", timelineRouter);
 app.use(errorMiddleware);
 
 dbConnection();
