@@ -10,6 +10,10 @@ import { errorMiddleware } from './middlewares/error.js';
 import messageRouter from './routes/messageRouter.js';
 import userRouter from "./routes/userRouter.js";
 import timelineRouter from "./routes/timelineRouter.js";
+import swAppRouter from "./routes/softwareApplicationRouter.js";
+import skillRouter from "./routes/skillRouter.js";
+import projectRouter from "./routes/projectRouter.js";
+
 const app = express();
 
 const PORT = configApp.appPort;
@@ -34,6 +38,10 @@ app.use(
 app.use('/message', messageRouter);
 app.use("/user", userRouter);
 app.use("/timeline", timelineRouter);
+app.use("/softwareApp", swAppRouter);
+app.use("/skill", skillRouter);
+app.use("/project", projectRouter);
+
 app.use(errorMiddleware);
 
 dbConnection();
