@@ -12,6 +12,7 @@ import userRouter from "./routes/userRouter.js";
 import timelineRouter from "./routes/timelineRouter.js";
 import swAppRouter from "./routes/softwareApplicationRouter.js";
 import skillRouter from "./routes/skillRouter.js";
+import projectRouter from "./routes/projectRouter.js";
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use("/user", userRouter);
 app.use("/timeline", timelineRouter);
 app.use("/softwareApp", swAppRouter);
 app.use("/skill", skillRouter);
+app.use("/project", projectRouter);
 
 app.use(errorMiddleware);
 
