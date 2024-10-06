@@ -11,7 +11,7 @@ import messageRouter from './routes/messageRouter.js';
 import userRouter from "./routes/userRouter.js";
 import timelineRouter from "./routes/timelineRouter.js";
 import swAppRouter from "./routes/softwareApplicationRouter.js";
-import { SoftwareApplication } from './models/softwareApplicationSchema.js';
+import skillRouter from "./routes/skillRouter.js";
 
 const app = express();
 
@@ -37,7 +37,8 @@ app.use(
 app.use('/message', messageRouter);
 app.use("/user", userRouter);
 app.use("/timeline", timelineRouter);
-app.use("/softwareApp", SoftwareApplication);
+app.use("/softwareApp", swAppRouter);
+app.use("/skill", skillRouter);
 
 app.use(errorMiddleware);
 
