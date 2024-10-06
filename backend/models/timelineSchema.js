@@ -12,6 +12,7 @@ const timelineSchema = new mongoose.Schema({
     timeline: {
         from: {
             type: String,
+            required: [true, "Please Add a Starting Date for the Timeline!"]
         },
         to: {
             type: String,
