@@ -38,7 +38,7 @@ app.use(
 app.use('/message', messageRouter);
 app.use("/user", userRouter);
 app.use("/timeline", timelineRouter);
-app.use("/softwareApp", swAppRouter);
+app.use("/softwareApplication", swAppRouter);
 app.use("/skill", skillRouter);
 app.use("/project", projectRouter);
 
