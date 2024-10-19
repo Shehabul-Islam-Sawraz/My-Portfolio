@@ -7,6 +7,13 @@ User Route: updaate profile is on route '/update/profile', not '/me/profile/upda
 
 # Frontend
 - npm create vite@latest ./ -- --template react
-- npm install -D tailwindcss
-- npx tailwindcss init
+- npm install --legacy-peer-deps -D tailwindcss postcss autoprefixer
+- npx tailwindcss init -p
 - npm install --legacy-peer-deps @react-three/fiber @react-three/drei maath react-tilt react-vertical-timeline-component @emailjs/browser framer-motion react-router-dom
+
+# Frontend Modification
+- Change personal info from `/frontend/constants/index.js`
+- Create your own logo. You can try [logo.com](https://logo.com/) and replace with the `logo.svg` file in `/frontend/src/assets/logo.svg`
+
+# Frontend TODO in main release
+- Make `/frontend/index.html` environmental variable dependent for **title** and **logo url**
