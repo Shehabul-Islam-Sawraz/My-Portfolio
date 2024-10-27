@@ -143,8 +143,8 @@ export const getUser = () => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
     try {
-        const { data } = await axios.get(
-            "",
+        const { data } = await axios.post(
+            `${import.meta.env.VITE_BACKEND_API_URL}/user/logout`,
             { withCredentials: true }
         );
         dispatch(userSlice.actions.logoutSuccess(data.message));
@@ -159,7 +159,7 @@ export const updatePassword =
         dispatch(userSlice.actions.updatePasswordRequest());
         try {
             const { data } = await axios.put(
-                "",
+                `${import.meta.env.VITE_BACKEND_API_URL}/user/update/password`,
                 { currentPassword, newPassword, confirmNewPassword },
                 {
                     withCredentials: true,
@@ -179,7 +179,7 @@ export const updateProfile = (data) => async (dispatch) => {
     dispatch(userSlice.actions.updateProfileRequest());
     try {
         const response = await axios.put(
-            "",
+            `${import.meta.env.VITE_BACKEND_API_URL}/user/update/profile`,
             data,
             {
                 withCredentials: true,
