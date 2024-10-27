@@ -111,9 +111,10 @@ const userSlice = createSlice({
 
 export const login = (email, password) => async (dispatch) => {
     dispatch(userSlice.actions.loginRequest());
+    console.log(import.meta.env.VITE_BACKEND_API_URL)
     try {
         const { data } = await axios.post(
-            "",
+            `${import.meta.env.VITE_BACKEND_API_URL}/user/login`,
             { email, password },
             { withCredentials: true, headers: { "Content-Type": "application/json" } }
         );
