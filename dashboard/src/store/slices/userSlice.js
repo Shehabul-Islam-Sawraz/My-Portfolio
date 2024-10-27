@@ -129,7 +129,7 @@ export const getUser = () => async (dispatch) => {
     dispatch(userSlice.actions.loadUserRequest());
     try {
         const { data } = await axios.get(
-            "",
+            `${import.meta.env.VITE_BACKEND_API_URL}/user/`,
             {
                 withCredentials: true,
             }
